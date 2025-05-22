@@ -18,7 +18,7 @@ logger.setLevel(logging.INFO)
 app = FastAPI()
 
 # === MODELLO CARICATO UNA SOLA VOLTA ===
-MODEL_PATH = "app/diabetes_model.pth"
+MODEL_PATH = "diabetes_model.pth"
 model = create_model(input_size=10)
 try:
     model.load_state_dict(torch.load(MODEL_PATH, map_location=torch.device("cpu")))
@@ -54,7 +54,7 @@ def preprocess_input(input_data: InputData):
     ], dtype=np.float32).reshape(1, -1)
 
     try:
-        with open('app/column_transformer.pkl', 'rb') as f:
+        with open('column_transformer.pkl', 'rb') as f:
             column_transformer = pickle.load(f)
         scaled_features = column_transformer.transform(features)
         return torch.FloatTensor(scaled_features)
